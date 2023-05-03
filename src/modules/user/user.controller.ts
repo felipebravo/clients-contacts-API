@@ -7,11 +7,17 @@ import {
   ParseUUIDPipe,
   Patch,
   Post,
+  Req,
+  UseGuards,
 } from '@nestjs/common';
 import { UserService } from './user.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
+import { Request } from 'express';
+import { JwtAuthGuard } from '../auth/jwt-auth.guard';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 
+@ApiTags('users')
 @Controller('users')
 export class UserController {
   constructor(private readonly userService: UserService) {}
@@ -22,21 +28,28 @@ export class UserController {
   }
 
   @Get(':id')
-  listUser(@Param('id', ParseUUIDPipe) id: string) {
-    return this.userService.listUser(id);
+  @ApiBearerAuth()
+  @UseGuards(JwtAuthGuard)
+  listUser(@Param('id', ParseUUIDPipe) id: string, @Req() req: Request) {
+    return this.userService.listUser(id, req);
   }
 
   @Patch(':id')
+  @ApiBearerAuth()
+  @UseGuards(JwtAuthGuard)
   updateUser(
     @Body() userNewInfo: UpdateUserDto,
     @Param('id', ParseUUIDPipe) id: string,
+    @Req() req: Request,
   ) {
-    return this.userService.updateUser(userNewInfo, id);
+    return this.userService.updateUser(userNewInfo, id, req);
   }
 
   @Delete(':id')
-  deleteUser(@Param('id', ParseUUIDPipe) id: string) {
-    return this.userService.deleteUser(id);
+  @ApiBearerAuth()
+  @UseGuards(JwtAuthGuard)
+  deleteUser(@Param('id', ParseUUIDPipe) id: string, @Req() req: Request) {
+    return this.userService.deleteUser(id, req);
   }
 
   @Get()

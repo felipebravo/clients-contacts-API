@@ -11,15 +11,12 @@ export class PrismaUserRepository implements UserRepository {
   constructor(private readonly prisma: PrismaService) {}
 
   async createUser(userToCreate: CreateUserDto): Promise<User> {
-    const newUser = new User();
-
-    Object.assign(newUser, {
-      ...userToCreate,
-    });
-
     const createdUser = await this.prisma.user.create({
       data: {
-        ...newUser,
+        fullName: userToCreate.fullName,
+        email: userToCreate.email,
+        phone: userToCreate.phone,
+        password: userToCreate.password,
       },
     });
 
@@ -39,6 +36,7 @@ export class PrismaUserRepository implements UserRepository {
         fullName: userNewInfo.fullName ?? undefined,
         email: userNewInfo.email ?? undefined,
         phone: userNewInfo.phone ?? undefined,
+        password: userNewInfo.password ?? undefined,
       },
     });
 
