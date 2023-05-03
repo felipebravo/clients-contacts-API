@@ -56,4 +56,10 @@ export class UserService {
   async listAllUsers() {
     return this.userRepository.listAllUsers();
   }
+
+  async findUserByEmail(userEmail: string) {
+    const userFound = await this.userRepository.findUserByEmail(userEmail);
+
+    return userFound;
+  }
 }
