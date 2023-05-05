@@ -3,6 +3,9 @@ import { UserService } from '../user/user.service';
 import { JwtService } from '@nestjs/jwt';
 import { compare } from 'bcryptjs';
 
+import { plainToInstance } from 'class-transformer';
+import { User } from '../user/entities/user.entity';
+
 @Injectable()
 export class AuthService {
   constructor(
@@ -27,8 +30,11 @@ export class AuthService {
   async login(userEmail: string) {
     const userFound = await this.userService.findUserByEmail(userEmail);
 
+    const user = plainToInstance(User, userFound);
+
     return {
       token: this.jwtService.sign({ userEmail }, { subject: userFound.id }),
+      user: user,
     };
   }
 }
