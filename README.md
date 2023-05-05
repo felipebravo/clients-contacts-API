@@ -16,8 +16,8 @@ Client Contacts permite que o usuário crie uma conta e a partir daí consulte, 
 - Com o PostgreSQL instalado, certifique-se da configuração para a conexão com o banco de dados;
 - Execute o comando `yarn prisma migrate dev --name init` para realizar as migrações com o banco de dados;
 - Execute o comando `yarn run:dev` no diretório do projeto para rodar a aplicação em modo de desenvolvedor;
-- Com o servidor sendo executado a rota [http://localhost:3000](http://localhost:3000) está pronta para receber requisições;\
-  **Para conhecer todas as rotas disponíveis acesse [Documentação API](http://localhost:3000/api) com o servidor sendo executado.**
+- Com o servidor sendo executado a rota `http://localhost:3000` está pronta para receber requisições;\
+  **Para conhecer todas as rotas disponíveis acesse `http://localhost:3000/api` com o servidor sendo executado.**
 - Pronto 🎉
 
 **Como realizar contribuições para o projeto?**
